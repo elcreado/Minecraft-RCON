@@ -1,0 +1,33 @@
+{
+  "likesTrigger": 50,
+  "gifts": {
+    "5655": {
+      "action": "spawnCreeper",
+      "description": "Acción para rose"
+    },
+    "7934": {
+      "action": "giveAndEquipDiamondArmor",
+      "description": "Acción para Heart Me"
+    },
+    "5658": {
+      "action": "teleportRandomNearby",
+      "description": "Acción para Perfume"
+    },
+    "5879": {
+      "action": "spawnWhiter",
+      "description": "Acción para Doughnut"
+    },
+    "6104": {
+      "action": "spawnDragon",
+      "description": "Acción para cap"
+    },
+    "13651": {
+      "action": "spawnDomesticDog",
+      "description": "Acción para Go Famous"
+    },
+    "8913": {
+      "action": "spawnLighting",
+      "description": "Acción para Go Famous Rosa"
+    }
+  }
+}
