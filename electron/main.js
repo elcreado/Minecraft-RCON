@@ -2,7 +2,8 @@ import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { onLog } from '../index.js';
+import { log, onLog } from '../scripts/logger.js';
+import { __init } from '../index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,7 +31,11 @@ const createWindow = () => {
     windows.setMenuBarVisibility(null);  //disable application menu
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(async () => {
+    createWindow();
+    await __init();
+    log('✅| Application started successfully.');
+});
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
