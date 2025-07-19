@@ -1,9 +1,0 @@
-{
-    "accessToken": "efi4eirynzeb0219ms3ypxzggm88uk",
-    "refreshToken": "t9ydendohc4nd2hl9wixyw72y7ko1cfss8jbggzio1ss2ag8w1",
-    "scope": [
-        "channel:read:redemptions"
-    ],
-    "expiresIn": 14839,
-    "obtainmentTimestamp": 1750894491938
-}

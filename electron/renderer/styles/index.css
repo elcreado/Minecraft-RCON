@@ -1,0 +1,46 @@
+:root {
+    --principal-color: #1A1A1A; 
+    --secondary-color: #2E2E2E;
+    --text-color: #FFFFFF;
+    --accent-color: #FF5722;
+    --font-family: 'Arial', sans-serif;
+    --font-size: 16px;
+}
+
+body {
+    background-color: var(--principal-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+}
+
+.header {
+    position: relative;
+}
+
+.header h1 {
+    text-align: center;
+    color: var(--accent-color);
+    margin-top: 20px;
+}
+
+#log-output {
+    /* font and weight */
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    color: var(--text-color);
+    line-height: 1.4;
+    padding: 1rem;
+    margin: 0.5rem 1rem;
+
+
+    /* Colors and log personalization*/
+    background-color: var(--secondary-color);
+    padding: 10px;
+    border-radius: 5px;
+    min-height: 300px;
+
+    overflow-y: auto;
+    white-space: pre-wrap;
+
+}

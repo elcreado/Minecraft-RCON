@@ -9,9 +9,15 @@ import { RefreshingAuthProvider } from '@twurple/auth';
 import { ApiClient } from '@twurple/api';
 import { EventSubWsListener } from '@twurple/eventsub-ws';
 
+import EventEmitter from 'events';
+
 //Configuracion
 
 dotenv.config({ path: './config.env' });
+
+const emitter = new EventEmitter();
+let logCallbacksn = [];
+let pendingLogs = [];
 
 let twitchListener;
 
@@ -47,14 +53,30 @@ async function loadTiktokRewards() {
     try {
         const raw = await fs.readFile('./data/tiktok-rewards.json', 'utf-8');
         tiktokRewards = JSON.parse(raw);
-        console.log("✅ | Recompensas cargadas");
-        console.log(tiktokRewards);
+        log('✅| Tiktok rewards loaded successfully.');
     } catch {
-        console.log("⚠️ | No se pudo cargar el tiktok-rewards.json");
+        log('⚠️| Failed to load tiktok-rewards.json');
     }
 };
 
 await loadTiktokRewards();
+
+export function onLog(callback) {
+    logCallbacksn.push(callback);
+    pendingLogs.forEach(msg => callback(msg));
+    pendingLogs = [];
+}
+
+function log(msg)  {
+    const formattedMsg = `[${new Date().toLocaleTimeString()}] ${msg}`;
+    logCallbacksn.forEach(callback => callback(formattedMsg));
+    if (logCallbacksn.length === 0) {
+        pendingLogs.push(formattedMsg);
+    }
+    console.log(formattedMsg);
+}
+
+log('🔄| [Index.js] Cargando configuracion...');
 
 //Conexion con Tiktok
 
@@ -131,6 +153,8 @@ async function tiktokConnection() {
 //Conexion con Twitch
 
 async function handleReward(title) {
+    console.log(`Iniciando `);
+
     const t = title.toLowerCase();
     const args = [process.env.RCON_HOST, process.env.RCON_PORT, process.env.RCON_PASSWORD];
     if (t.includes('creeper')) await spawnCreeper(...args);
@@ -149,13 +173,13 @@ async function twitchConnection() {
         clientSecret: TWITCH_CLIENT_SECRET,
         // Cada vez que se refresquen tokens, los guardamos
         onRefresh: async (userId, newTokenData) => {
-            await fs.writeFile(`./data/tokens.${userId}.json`, JSON.stringify(newTokenData, null, 4), 'utf-8');
+            await fs.writeFile(`./data/tokens/tokens.${userId}.json`, JSON.stringify(newTokenData, null, 4), 'utf-8');
             log(`🔄 Tokens actualizados para ${userId}`);
         }
     });
 
     // Lee tu archivo de tokens existente (asegúrate de que esté en este formato)
-    const tokenData = JSON.parse(await fs.readFile('./data/tokens.json', 'utf-8'));
+    const tokenData = JSON.parse(await fs.readFile('./data/tokens/tokens.json', 'utf-8'));
 
     await authProvider.addUserForToken(tokenData, ['channel:read:redemptions']);
 
@@ -165,7 +189,7 @@ async function twitchConnection() {
     if (!user) {
         throw new Error(`Usuario de Twitch "${TWITCH_BROADCASTER_LOGIN}" no encontrado`);
     }
-    console.log(`▶️ Twitch conectado como: ${user.displayName}`);
+    log(`▶️ Twitch conectado como: ${user.displayName}`);
 
 
     // Inicia el listener de EventSub por WebSockets
