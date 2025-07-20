@@ -6,8 +6,8 @@ import { fileURLToPath } from 'url';
 import { log, onLog } from '../scripts/logger.js';
 import { __init } from '../index.js';
 
-import { tiktokMain } from '../scripts/tiktok/tiktokConnect.js';
-import { twitchMain } from '../scripts/Twitch/twitchConnect.js';
+import { tiktokMain, disconnectTiktok } from '../scripts/tiktok/tiktokConnect.js';
+import { twitchMain, disconnectTwitch } from '../scripts/Twitch/twitchConnect.js';
 
 import { loadSettings, saveSettings } from '../scripts/saveSettings.js';
 
@@ -32,7 +32,7 @@ const createWindow = () => {
     const htmlPath = path.join(__dirname, 'renderer', 'index.html');
     windows.loadFile(htmlPath);
 
-    onLog(msg => windows.webContents.send('log', msg));
+    onLog((msg, color) => windows.webContents.send('log', msg, color));
 
     windows.setMenuBarVisibility(null);  //disable application menu
 }
@@ -45,7 +45,7 @@ app.whenReady().then(async () => {
 
 ipcMain.handle('start-tiktok-connection', async () => {
     const user = await loadSettings();
-    const username = user.tiktokUser || 'elcreado_gg'; // Default username if not set
+    const username = user.tiktokUsername || 'elcreado_gg'; // Default username if not set
     
     log(`Starting TikTok connection for user: ${username}`);
 
@@ -63,6 +63,14 @@ ipcMain.handle('save-settings', async (event, settings) => {
     const lastTiktok = lastSettings.tiktokUsername || 'elcreado_gg'; // Default username if not set
     const lastTwitch = lastSettings.twitchUsername || 'elcreado_gg'; // Default username if not set
 
+    try {
+        await disconnectTiktok();
+        await disconnectTwitch();
+        log('✅| Disconnected from TikTok and Twitch successfully.');
+    } catch (error) {
+        log(`Error disconnecting TikTok: ${error.message}`);
+    }
+
     if (settings.tiktokUsername == "") {
         settings.tiktokUsername = lastTiktok;
     }
@@ -73,6 +81,26 @@ ipcMain.handle('save-settings', async (event, settings) => {
 
     const result = await saveSettings(settings);
     return result;
+});
+
+ipcMain.handle('disconnect-tiktok', async () => {
+    try {
+        await disconnectTiktok();
+    } catch (error) {
+        log(`Error disconnecting TikTok: ${error.message}`);
+    }
+
+    return { success: true, message: 'TikTok connection disconnected' };
+});
+
+ipcMain.handle('disconnect-twitch', async () => {
+    try {
+        await disconnectTwitch();
+    } catch (error) {
+        log(`Error disconnecting Twitch: ${error.message}`);
+    }
+
+    return { success: true, message: 'Twitch connection disconnected' };
 });
 
 app.on('window-all-closed', () => {

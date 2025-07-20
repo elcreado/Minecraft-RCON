@@ -5,6 +5,8 @@
     --accent-color: #FF5722;
     --success-color: #4CAF50;
     --error-color: #F44336;
+    --tiktok-chat-color: #d18fe6;
+    --twitch-chat-color: #9146FF;
     --font-family: 'Arial', sans-serif;
     --font-size: 16px;
 }
@@ -44,7 +46,6 @@ body {
 
     overflow-y: auto;
     white-space: pre-wrap;
-    display: none; 
 }
 
 .control-section {

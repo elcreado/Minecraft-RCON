@@ -7,6 +7,7 @@ import fs from 'fs/promises';
 
 import { log } from '../logger.js';
 import { handleReward } from '../Minecraft/rconRewards.js';
+import { connect } from 'http2';
 
 dotenv.config({ path: './config.env' });
 
@@ -61,8 +62,21 @@ const actions = {
     spawnDomesticDog: 'lobo-domesticado'
 };
 
+let connection = null
+let connected = false;
+
 export async function tiktokConnection(username) {
-    const connection = new TikTokLiveConnection(username, {
+    if (connected == true) {
+        try {
+            log('⚠️| Tiktok connection already exists. Disconnecting first...');
+            await disconnectTiktok();
+        } catch (error) {
+            log(`⚠️| Error disconnecting TikTok: ${error.message}`);
+            return;
+        }
+    }
+
+    connection = new TikTokLiveConnection(username, {
         signApiKey: SING_API_KEY,
         //sessionId: `a77c539bf5296d8f4acc4554984d536c`,
         //ttTargetIdc: `useast1a`,
@@ -88,17 +102,23 @@ export async function tiktokConnection(username) {
 
     connection.connect().then(state => {
         console.info(`Connected to roomId ${state.roomId}`);
+        connected = true;
     }).catch(err => {
         console.error('Failed to connect', err);
     });
 
     connection.on(WebcastEvent.CHAT, data => {
-        console.log(`${data.user.uniqueId} (userId:${data.user.uniqueId}) writes: ${data.comment}`);
+        log(`${data.user.uniqueId} writes: ${data.comment}`, 'var(--tiktok-chat-color)');
     });
 
     connection.on(WebcastEvent.GIFT, async data => {
-        console.log(`${data.user.uniqueId} (userId:${data.user.userId}) sends ${data.giftId}`);
-        await TiktokGiftRewards(data.giftId);
+        log(`${data.user.uniqueId} sends ${data.giftId}`, 'var(--tiktok-chat-color)');
+
+        try {
+            await TiktokGiftRewards(data.giftId);
+        } catch (error) {
+            log(`⚠️| Error to process TikTok gift: ${error.message}`);
+        }
     });
 
     connection.on(WebcastEvent.LIKE, async data => {
@@ -112,7 +132,22 @@ export async function tiktokConnection(username) {
         console.log(`Se ah dado like`);
         console.log(likeCounts);
     });
+
+
 };
+
+export async function disconnectTiktok() {
+    console.log(connection.isConnected);
+    if (connection.isConnected == true || connection) {
+        try {
+            await connection.disconnect();
+            connected = null;
+            log('✅| Tiktok connection closed successfully.');
+        } catch (error) {
+            log(`⚠️| Error disconnecting TikTok: ${error.message}`);
+        }
+    }
+}
 
 export async function tiktokMain(username) {
     try {

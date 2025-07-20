@@ -95,6 +95,18 @@ async function twitchConnection() {
     });
 };
 
+export async function disconnectTwitch()  {
+    if (twitchListener) {
+        console.log(twitchListener);
+        await twitchListener.removeListener();
+        await twitchListener.stop();
+        twitchListener = null;
+        log('✅ Twitch EventSub WS detenido');
+    } else {
+        log('⚠️ No hay un listener de Twitch activo para detener');
+    }
+}
+
 export async function twitchMain() {
     try {
         await twitchConnection();

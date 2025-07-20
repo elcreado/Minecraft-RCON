@@ -6,17 +6,17 @@ let pendingLogs = [];
 
 export function onLog(callback) {
     logCallbacksn.push(callback);
-    pendingLogs.forEach(msg => callback(msg));
+    console.log(pendingLogs);
+    pendingLogs.forEach(({ msg, color }) => callback(msg, color));
     pendingLogs = [];
 }
 
-export function log(msg)  {
+export function log(msg, color)  {
     const formattedMsg = `[${new Date().toLocaleTimeString()}] ${msg}`;
-    logCallbacksn.forEach(callback => callback(formattedMsg));
+    logCallbacksn.forEach(callback => callback(formattedMsg, color));
     if (logCallbacksn.length === 0) {
-        pendingLogs.push(formattedMsg);
+        pendingLogs.push({ msg: formattedMsg, color });
     }
-    console.log(formattedMsg);
 }
 
 log('🔄| [Index.js] Cargando configuracion...');
