@@ -1,33 +1,68 @@
 import { SignConfig, TikTokLiveConnection, WebcastEvent, ControlEvent, ControlAction } from 'tiktok-live-connector';
 import dotenv from 'dotenv';
 
-import {log} from '../logger.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs/promises';
+
+import { log } from '../logger.js';
+import { handleReward } from '../Minecraft/rconRewards.js';
 
 dotenv.config({ path: './config.env' });
 
-const { SING_API_KEY, TIKTOK_USERNAME, RCON_HOST, RCON_PORT, RCON_PASSWORD } = process.env;
+const { SING_API_KEY, TIKTOK_USERNAME } = process.env;
+
+let likeCounts = 0;
+
+let tiktokRewards = {
+    likesTrigger: 50,
+    gifts: {}
+};
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+async function loadTiktokRewards() {
+    try {
+        const rewardsPath = path.join(__dirname, '../../data/tiktok-rewards.json');
+
+        const raw = await fs.readFile(rewardsPath, 'utf-8');
+        tiktokRewards = JSON.parse(raw);
+        log('✅| [tiktokConnect.js] Tiktok rewards loaded successfully.');
+    } catch {
+        log('⚠️| [tiktokConnect.js] Failed to load tiktok-rewards.json');
+    }
+};
+
+await loadTiktokRewards();
 
 async function TiktokGiftRewards(giftId) {
     const key = String(giftId);
     const reward = tiktokRewards.gifts[key];
     if (!reward) return console.warn(`No hay recompensas para el ID ${key}`);
 
-    console.log("El regalo recibido es = ", key);
+    log("El regalo recibido es = ", key);
 
-
-    const fn = actions[reward.action];
-    await fn(RCON_HOST, RCON_PORT, RCON_PASSWORD);
+    await handleReward(reward.action);
 };
 
 //Conexion con Tiktok
 
 SignConfig.apiKey = SING_API_KEY;
-const tiktokUsername = TIKTOK_USERNAME;
 
-let likeCounts = 0;
+const actions = {
+    spawnCreeper: 'creeper',
+    spawnZombie: 'zombie',
+    giveAndEquipDiamondArmor: 'diamond_armor',
+    spawnDragon: 'dragon',
+    spawnLighting: 'lightning',
+    teleportRandomNearby: 'teleport',
+    spawnWhiter: 'wither',
+    spawnDomesticDog: 'lobo-domesticado'
+};
 
-export async function tiktokConnection() {
-    const connection = new TikTokLiveConnection(tiktokUsername, {
+export async function tiktokConnection(username) {
+    const connection = new TikTokLiveConnection(username, {
         signApiKey: SING_API_KEY,
         //sessionId: `a77c539bf5296d8f4acc4554984d536c`,
         //ttTargetIdc: `useast1a`,
@@ -70,7 +105,7 @@ export async function tiktokConnection() {
         likeCounts += data.likeCount;
 
         if (likeCounts >= 50) {
-            await spawnZombie(RCON_HOST, RCON_PORT, RCON_PASSWORD);
+            await handleReward(actions.spawnZombie);
             likeCounts = 0;
         };
 
@@ -78,3 +113,13 @@ export async function tiktokConnection() {
         console.log(likeCounts);
     });
 };
+
+export async function tiktokMain(username) {
+    try {
+        await tiktokConnection(username);
+        return { success: true, message: 'TikTok connection started' };
+    } catch (error) {
+        log(`⚠️| Error al conectar con TikTok: ${error.message}`);
+        return { success: false, message: `Error: ${error.message}` };
+    }
+}

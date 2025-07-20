@@ -14,8 +14,22 @@
     </div>
 
     <div class="control-section">
-        <div id="log-output"></div>
+        <button id="start-twitch">Twitch Connect</button>
+        <button id="start-tiktok">TikTok Connect</button>
+        <button id="show-console">Show Log</button>
+        <button id="settings">Settings</button>
     </div>
+
+    <div id="settings-section">
+        <h2>Settings</h2>
+        <label for="tiktok-username">TikTok Username:</label>
+        <input type="text" id="tiktok-username" placeholder="Enter TikTok Username">
+        <label for="twitch-username">Twitch Username:</label>
+        <input type="text" id="twitch-username" placeholder="Enter Twitch Username">
+        <button id="save-settings">Save Settings</button>
+    </div>
+    
+    <div id="log-output"></div>
 
     <script src="renderer.js" type="module"></script>
 </body>

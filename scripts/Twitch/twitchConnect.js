@@ -16,7 +16,32 @@ const { TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, TWITCH_BROADCASTER_LOGIN } = pro
 
 let twitchListener;
 
-export async function twitchConnection() {
+async function rconText(username, title) {
+    try {
+        // 1) Conéctate por RCON
+        const r = await Rcon.connect({
+            host: process.env.RCON_HOST,
+            port: Number(process.env.RCON_PORT),
+            password: process.env.RCON_PASSWORD
+        });
+
+        // 2) Envía un mensaje al chat
+        const msg = [
+            { text: '[Recompensa] ', color: 'gold' },
+            { text: username, color: 'yellow' },
+            { text: ' redimió ', color: 'white' },
+            { text: title, color: 'aqua' }
+        ];
+        await r.send(`/tellraw @a ${JSON.stringify(msg)}`);
+
+        r.end();
+    } catch (err) {
+        console.error('Error al conectar con RCON:', err);
+        throw new Error('RCON connection failed');
+    }
+}
+
+async function twitchConnection() {
     const authProvider = new RefreshingAuthProvider({
         clientId: TWITCH_CLIENT_ID,
         clientSecret: TWITCH_CLIENT_SECRET,
@@ -53,31 +78,29 @@ export async function twitchConnection() {
                 const username = event.userDisplayName;
                 const title = event.rewardTitle;
 
-                // 1) Conéctate por RCON
-                const r = await Rcon.connect({
-                    host: process.env.RCON_HOST,
-                    port: Number(process.env.RCON_PORT),
-                    password: process.env.RCON_PASSWORD
-                });
-
-                // 2) Envía un mensaje al chat
-                const msg = [
-                    { text: '[Recompensa] ', color: 'gold' },
-                    { text: username, color: 'yellow' },
-                    { text: ' redimió ', color: 'white' },
-                    { text: title, color: 'aqua' }
-                ];
-                await r.send(`/tellraw @a ${JSON.stringify(msg)}`);
-
                 log(`🔔 Recompensa redimida por ${username}: ${title}`);
                 console.log(`🔔 Recompensa redimida por ${username}: ${title}`);
                 // 3) Ejecuta la recompensa (spawn, teleport, etc)
-                await handleReward(title);
 
-                r.end();
+                try {
+                    await handleReward(title);
+                } catch (err) {
+                    log(`⚠️ Has been an error while handling the reward: ${err.message}`);
+                }
+
             } catch (err) {
-                console.error('Error en reward:', err);
+                log(`⚠️ Has been an error while processing the redemption: ${err.message}`);
             }
         })();
     });
 };
+
+export async function twitchMain() {
+    try {
+        await twitchConnection();
+        return { success: true, message: 'Twitch connection started' };
+    } catch (error) {
+        log(`⚠️| Error al conectar con Twitch: ${error.message}`);
+        return { success: false, message: error.message };
+    }
+}

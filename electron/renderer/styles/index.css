@@ -3,6 +3,8 @@
     --secondary-color: #2E2E2E;
     --text-color: #FFFFFF;
     --accent-color: #FF5722;
+    --success-color: #4CAF50;
+    --error-color: #F44336;
     --font-family: 'Arial', sans-serif;
     --font-size: 16px;
 }
@@ -42,5 +44,63 @@ body {
 
     overflow-y: auto;
     white-space: pre-wrap;
+    display: none; 
+}
 
+.control-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+}
+
+#start-twitch {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+#start-tiktok {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+#show-console {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+#settings {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+#settings-section {
+    display: none; 
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 }
