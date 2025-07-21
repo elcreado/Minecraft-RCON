@@ -1,107 +1,271 @@
 :root {
-    --principal-color: #1A1A1A; 
-    --secondary-color: #2E2E2E;
-    --text-color: #FFFFFF;
-    --accent-color: #FF5722;
-    --success-color: #4CAF50;
-    --error-color: #F44336;
-    --tiktok-chat-color: #d18fe6;
-    --twitch-chat-color: #9146FF;
-    --font-family: 'Arial', sans-serif;
-    --font-size: 16px;
+  --primary-color:    #121212;
+  --secondary-color:  #1e1e1e;
+  --text-color:       #e1e1e1;
+  --accent-color:     #FF6B35;
+  --twitch-color:     #9146FF;
+  --tiktok-color:     #EE1D52;
+  --success-color:    #4CAF50;
+  --info-color:       #2196F3;
+  --font-family:      'Arial', sans-serif;
+  --font-size:        16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    background-color: var(--principal-color);
-    color: var(--text-color);
-    font-family: var(--font-family);
-    font-size: var(--font-size);
+  background: var(--primary-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  height: 100vh;
 }
 
-.header {
-    position: relative;
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.header h1 {
-    text-align: center;
-    color: var(--accent-color);
-    margin-top: 20px;
+/* Top Bar */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--secondary-color);
+  padding: 16px 32px;
+  margin: 16px;
+  border-radius: 8px;
+}
+
+.top-bar .logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.top-bar .logo i {
+  color: var(--accent-color);
+  font-size: 1.5rem;
+}
+
+.top-bar .logo span {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* Botones */
+.connect-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn i {
+  font-size: 1rem;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.btn-twitch {
+  background: var(--twitch-color);
+  color: #fff;
+}
+
+.btn-tiktok {
+  background: var(--tiktok-color);
+  color: #fff;
+}
+
+.btn-toggle {
+  background: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.btn-save {
+  background: var(--accent-color);
+  color: #fff;
+  width: 100%;
+}
+
+/* Layout principal */
+.main-content {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+  margin: 0 16px 16px;
+}
+
+/* Log Section */
+.log-section {
+  flex: 1;
+  background: var(--secondary-color);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #333;
+}
+
+.log-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+}
+
+.entry-count {
+  background: var(--accent-color);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
 }
 
 #log-output {
-    /* font and weight */
-    font-family: var(--font-family);
-    font-size: 0.95rem;
-    color: var(--text-color);
-    line-height: 1.4;
-    padding: 1rem;
-    margin: 0.5rem 1rem;
-
-
-    /* Colors and log personalization*/
-    background-color: var(--secondary-color);
-    padding: 10px;
-    border-radius: 5px;
-    min-height: 300px;
-
-    overflow-y: auto;
-    white-space: pre-wrap;
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
 }
 
-.control-section {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 5px;
+.log-entry {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
-#start-twitch {
-    background-color: var(--accent-color);
-    color: var(--text-color);
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    margin: 0 auto;
+.timestamp {
+  color: #888;
+  font-size: 0.9rem;
+  margin-right: 12px;
 }
 
-#start-tiktok {
-    background-color: var(--accent-color);
-    color: var(--text-color);
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    margin: 0 auto;
+.badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-right: 12px;
+  text-transform: uppercase;
 }
 
-#show-console {
-    background-color: var(--accent-color);
-    color: var(--text-color);
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    margin: 0 auto;
+.badge-success {
+  background: var(--success-color);
+  color: #fff;
 }
 
-#settings {
-    background-color: var(--accent-color);
-    color: var(--text-color);
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    margin: 0 auto;
+.badge-info {
+  background: var(--info-color);
+  color: #fff;
 }
 
-#settings-section {
-    display: none; 
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
+/* Estado de Servicios & Configuración */
+.status-settings {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.status-section,
+.config-section {
+  background: var(--secondary-color);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+/* Encabezados internos */
+.section-header h2 {
+  font-size: 1.1rem;
+}
+
+.section-header h2 span {
+  font-size: 0.85rem;
+  color: #888;
+  margin-left: 8px;
+}
+
+/* Service Cards */
+.service-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.service-card {
+  background: var(--secondary-color);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.service-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+}
+
+.service-card-body {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.connected {
+  background: var(--success-color);
+}
+
+/* Configuración */
+.config-section h2 {
+  margin-bottom: 12px;
+}
+
+.config-section label {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.config-section input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 4px;
+  color: var(--text-color);
 }

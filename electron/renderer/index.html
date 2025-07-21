@@ -1,36 +1,151 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rewards Aplication</title>
-    <link rel="stylesheet" href="styles/index.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rewards Application</title>
+  <!-- Font Awesome para íconos -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link rel="stylesheet" href="styles/index.css">
 </head>
-
 <body>
-    <div class="header">
-        <h1>Rewards Application</h1>
+  <div class="container">
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <div class="logo">
+        <i class="fas fa-bolt"></i>
+        <span>Rewards Application</span>
+      </div>
+      <div class="connect-buttons">
+        <button id="btn-twitch" class="btn btn-twitch">
+          <i class="fab fa-twitch"></i>
+          Twitch Connect
+        </button>
+        <button id="btn-tiktok" class="btn btn-tiktok">
+          <i class="fab fa-tiktok"></i>
+          TikTok Connect
+        </button>
+        <button id="btn-toggle-log" class="btn btn-toggle">
+          <i class="fas fa-eye-slash"></i>
+          Ocultar Log
+        </button>
+      </div>
+    </header>
 
-    </div>
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Log de Actividad -->
+      <section class="log-section" style="display:block;">
+        <div class="log-header">
+          <h2><i class="fas fa-terminal"></i> Log de Actividad</h2>
+          <span class="entry-count">4 entradas</span>
+        </div>
+        <div id="log-output">
+          <!-- Ejemplo de entradas -->
+          <div class="log-entry">
+            <span class="timestamp">19:09:58</span>
+            <span class="badge badge-success">SUCCESS</span>
+            <span class="message">Application successfully loaded!</span>
+          </div>
+          <div class="log-entry">
+            <span class="timestamp">19:09:58</span>
+            <span class="badge badge-success">SUCCESS</span>
+            <span class="message">TikTok rewards loaded successfully.</span>
+          </div>
+          <div class="log-entry">
+            <span class="timestamp">19:09:58</span>
+            <span class="badge badge-info">INFO</span>
+            <span class="message">Application started.</span>
+          </div>
+          <div class="log-entry">
+            <span class="timestamp">19:09:58</span>
+            <span class="badge badge-success">SUCCESS</span>
+            <span class="message">Application started successfully.</span>
+          </div>
+        </div>
+      </section>
 
-    <div class="control-section">
-        <button id="start-twitch">Twitch Connect</button>
-        <button id="start-tiktok">TikTok Connect</button>
-        <button id="show-console">Show Log</button>
-        <button id="settings">Settings</button>
-    </div>
+      <!-- Estado de Servicios y Configuración -->
+      <section class="status-settings">
+        <!-- Servicios -->
+        <div class="status-section">
+          <div class="section-header">
+            <h2>Estado de Servicios <span>En tiempo real</span></h2>
+          </div>
+          <div class="service-cards">
+            <div class="service-card">
+              <div class="service-card-header">
+                <i class="fab fa-tiktok"></i>
+                <span>TikTok</span>
+              </div>
+              <div class="service-card-body">
+                <span class="status-dot connected"></span>
+                <span>Conectado</span>
+              </div>
+              <div class="service-card-footer">
+                <small>Última actualización: Hace 2 minutos</small>
+              </div>
+            </div>
+            <div class="service-card">
+              <div class="service-card-header">
+                <i class="fab fa-twitch"></i>
+                <span>Twitch</span>
+              </div>
+              <div class="service-card-body">
+                <span class="status-dot connected"></span>
+                <span>Conectado</span>
+              </div>
+              <div class="service-card-footer">
+                <small>Última actualización: Hace 1 minuto</small>
+              </div>
+            </div>
+            <div class="service-card">
+              <div class="service-card-header">
+                <i class="fas fa-gamepad"></i>
+                <span>Minecraft RCON</span>
+              </div>
+              <div class="service-card-body">
+                <span class="status-dot connected"></span>
+                <span>Conectado</span>
+              </div>
+              <div class="service-card-footer">
+                <small>Última actualización: Hace 30 segundos</small>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <div id="settings-section" style="display: none;">
-        <h2>Settings</h2>
-        <label for="tiktok-username">TikTok Username:</label>
-        <input type="text" id="tiktok-username" placeholder="Enter TikTok Username">
-        <label for="twitch-username">Twitch Username:</label>
-        <input type="text" id="twitch-username" placeholder="Enter Twitch Username">
-        <button id="save-settings">Save Settings</button>
-    </div>
+        <!-- Configuración -->
+        <div class="config-section">
+          <h2>Configuración</h2>
+          <label for="tiktok-username">Usuario de TikTok</label>
+          <input
+            type="text"
+            id="tiktok-username"
+            placeholder="Ingresa tu usuario de TikTok"
+          >
+          <label for="twitch-username">Usuario de Twitch</label>
+          <input
+            type="text"
+            id="twitch-username"
+            placeholder="Ingresa tu usuario de Twitch"
+          >
+          <button id="save-settings" class="btn btn-save">
+            <i class="fas fa-save"></i>
+            Guardar Configuración
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
 
-    <div id="log-output" style="display: none;"></div>
-
-    <script src="renderer.js" type="module"></script>
+  <script src="renderer.js" type="module"></script>
 </body>
 </html>
