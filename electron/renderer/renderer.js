@@ -30,14 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
       badgeClass = 'badge badge-error';
     } else if (color === 'var(--info-color)') {
       badgeText = 'INFO';
-      badgeClass = 'badge badge-info';  
+      badgeClass = 'badge badge-info';
     } else if (color === 'var(--tiktok-color)') {
       badgeText = 'TIKTOK';
       badgeClass = 'badge badge-tiktok';
     } else if (color === 'var(--twitch-color)') {
       badgeText = 'TWITCH';
       badgeClass = 'badge badge-twitch';
-    } 
+    }
     else {
       badgeText = '';
       badgeClass = '';
@@ -100,6 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await window.electronAPI.startTiktokConnection();
 
       if (result.success) {
+        tiktokBtn.innerHTML = `<i class="fab fa-tiktok"></i> TikTok Connected`;
+        tiktokBtn.style.backgroundColor = 'var(--tiktok-color)';
+        tiktokConnection = false;
+
         statusDot.classList.remove('disconnected');
         statusDot.classList.add('connected');
         tiktokText.textContent = 'Connected';
@@ -112,7 +116,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
     } else {
-      const result = await window.electronAPI.disconnectTiktok();
+      await window.electronAPI.disconnectTiktok();
+
+      tiktokBtn.innerHTML = `<i class="fab fa-tiktok"></i> TikTok Connect`;
+      tiktokBtn.style.backgroundColor = 'var(--tiktok-color)';
+      tiktokConnection = false;
 
       statusDot.classList.remove('connected');
       statusDot.classList.add('disconnected');
@@ -149,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await window.electronAPI.disconnectTwitch();
 
       statusDot.classList.remove('connected');
-      statusDot.classList.add('disconnected'); 
+      statusDot.classList.add('disconnected');
       twitchText.textContent = 'Disconnected';
 
       twitchConnection = false;
@@ -160,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
   saveSettingsBtn.addEventListener('click', async () => {
     const tiktokUsername = document.getElementById('tiktok-username').value;
     const twitchUsername = document.getElementById('twitch-username').value;
+    const rconIp = document.getElementById('server-ip').value;
 
     // Reset visual de botones
     tiktokBtn.innerHTML = `<i class="fab fa-tiktok"></i> TikTok Connect`;
@@ -170,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     twitchBtn.style.backgroundColor = 'var(--twitch-color)';
     twitchConnection = false;
 
-    const result = await window.electronAPI.saveSettings({ tiktokUsername, twitchUsername });
+    const result = await window.electronAPI.saveSettings({ tiktokUsername, twitchUsername, rconIp });
 
     appendLog(result.message, 'var(--success-color)');
   });

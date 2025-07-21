@@ -59,6 +59,9 @@ ipcMain.handle('save-settings', async (event, settings) => {
     const lastSettings = await loadSettings();
     const lastTiktok = lastSettings.tiktokUsername || 'elcreado_gg'; // Default username if not set
     const lastTwitch = lastSettings.twitchUsername || 'elcreado_gg'; // Default username if not set
+    const lastServerIp = lastSettings.serverIp || '192.168.0.6';
+
+    log(lastServerIp);
 
     try {
         await disconnectTiktok();
@@ -74,6 +77,10 @@ ipcMain.handle('save-settings', async (event, settings) => {
 
     if (settings.twitchUsername == "") {
         settings.twitchUsername = lastTwitch;
+    }
+
+    if (settings.rconIp == "") {
+        settings.rconIp = lastServerIp;
     }
 
     const result = await saveSettings(settings);

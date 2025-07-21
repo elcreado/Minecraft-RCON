@@ -16,30 +16,30 @@ const { TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, TWITCH_BROADCASTER_LOGIN } = pro
 
 let twitchListener;
 
-async function rconText(username, title) {
-    try {
-        // 1) Conéctate por RCON
-        const r = await Rcon.connect({
-            host: process.env.RCON_HOST,
-            port: Number(process.env.RCON_PORT),
-            password: process.env.RCON_PASSWORD
-        });
+// async function rconText(username, title) {
+//     try {
+//         // 1) Conéctate por RCON
+//         const r = await Rcon.connect({
+//             host: process.env.RCON_HOST,
+//             port: Number(process.env.RCON_PORT),
+//             password: process.env.RCON_PASSWORD
+//         });
 
-        // 2) Envía un mensaje al chat
-        const msg = [
-            { text: '[Recompensa] ', color: 'gold' },
-            { text: username, color: 'yellow' },
-            { text: ' redimió ', color: 'white' },
-            { text: title, color: 'aqua' }
-        ];
-        await r.send(`/tellraw @a ${JSON.stringify(msg)}`);
+//         // 2) Envía un mensaje al chat
+//         const msg = [
+//             { text: '[Recompensa] ', color: 'gold' },
+//             { text: username, color: 'yellow' },
+//             { text: ' redimió ', color: 'white' },
+//             { text: title, color: 'aqua' }
+//         ];
+//         await r.send(`/tellraw @a ${JSON.stringify(msg)}`);
 
-        r.end();
-    } catch (err) {
-        console.error('Error al conectar con RCON:', err);
-        throw new Error('RCON connection failed');
-    }
-}
+//         r.end();
+//     } catch (err) {
+//         console.error('Error al conectar con RCON:', err);
+//         throw new Error('RCON connection failed');
+//     }
+// }
 
 async function twitchConnection() {
     const authProvider = new RefreshingAuthProvider({

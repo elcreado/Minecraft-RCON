@@ -11,7 +11,7 @@ import { connect } from 'http2';
 
 dotenv.config({ path: './config.env' });
 
-const { SING_API_KEY, TIKTOK_USERNAME } = process.env;
+const { SING_API_KEY } = process.env;
 
 let likeCounts = 0;
 
@@ -134,11 +134,10 @@ export async function tiktokConnection(username) {
 };
 
 export async function disconnectTiktok() {
-    console.log(connection.isConnected);
-    if (connection.isConnected == true || connection) {
+    if (connected == true) {
         try {
             await connection.disconnect();
-            connected = null;
+            connected = false;
             log('Tiktok connection closed successfully.', 'var(--success-color)');
         } catch (error) {
             log(`⚠️| Error disconnecting TikTok: ${error.message}`, 'var(--error-color)');
