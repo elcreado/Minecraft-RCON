@@ -44,8 +44,8 @@
       <!-- Log de Actividad -->
       <section class="log-section" style="display:block;">
         <div class="log-header">
-          <h2><i class="fas fa-terminal"></i> Log de Actividad</h2>
-          <span class="entry-count">4 entradas</span>
+          <h2><i class="fas fa-terminal"></i> Activity Log </h2>
+          <span class="entry-count" id="entry-count-span">0 Entities</span>
         </div>
         <div id="log-output">
          
@@ -57,7 +57,7 @@
         <!-- Servicios -->
         <div class="status-section">
           <div class="section-header">
-            <h2>Estado de Servicios <span>En tiempo real</span></h2>
+            <h2>Services Status <span>Real Time</span></h2>
           </div>
           <div class="service-cards">
             <div class="service-card">
@@ -104,22 +104,28 @@
 
         <!-- Configuración -->
         <div class="config-section">
-          <h2>Configuración</h2>
-          <label for="tiktok-username">Usuario de TikTok</label>
+          <h2>Settings</h2>
+          <label for="tiktok-username">Tiktok user</label>
           <input
             type="text"
             id="tiktok-username"
-            placeholder="Ingresa tu usuario de TikTok"
+            placeholder="Write your tiktok user"
           >
-          <label for="twitch-username">Usuario de Twitch</label>
+          <label for="twitch-username">Twitch user</label>
           <input
             type="text"
             id="twitch-username"
-            placeholder="Ingresa tu usuario de Twitch"
+            placeholder="Write your twitch user"
+          >
+          <label for="server-ip">Minecraft server IP</label>
+          <input
+            type="text"
+            id="server-ip"
+            placeholder="Write your server IP"
           >
           <button id="save-settings" class="btn btn-save">
             <i class="fas fa-save"></i>
-            Guardar Configuración
+            Save Settings
           </button>
         </div>
       </section>

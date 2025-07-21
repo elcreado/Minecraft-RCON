@@ -84,7 +84,7 @@ ipcMain.handle('disconnect-tiktok', async () => {
     try {
         await disconnectTiktok();
     } catch (error) {
-        log(`Error disconnecting TikTok: ${error.message}`);
+        log(`Error disconnecting TikTok: ${error.message}`, 'var(--error-color)');
     }
 
     return { success: true, message: 'TikTok connection disconnected' };

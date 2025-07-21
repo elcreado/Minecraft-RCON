@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const logSection = document.querySelector('.log-section');
   const logOutput = document.getElementById('log-output');
   const toggleLogBtn = document.getElementById('btn-toggle-log');
+  const entryCountSpan = document.getElementById('entry-count-span');
 
   const tiktokBtn = document.getElementById('btn-tiktok');
   const twitchBtn = document.getElementById('btn-twitch');
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Función para añadir líneas al log
   function appendLog(message, color) {
-    const MAX_LOG_LINES = 50;
+    const MAX_LOG_LINES = 25;
     const time = new Date().toLocaleTimeString();
 
     let badgeText = '';
@@ -29,8 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
       badgeClass = 'badge badge-error';
     } else if (color === 'var(--info-color)') {
       badgeText = 'INFO';
-      badgeClass = 'badge badge-info';
-    } else {
+      badgeClass = 'badge badge-info';  
+    } else if (color === 'var(--tiktok-color)') {
+      badgeText = 'TIKTOK';
+      badgeClass = 'badge badge-tiktok';
+    } else if (color === 'var(--twitch-color)') {
+      badgeText = 'TWITCH';
+      badgeClass = 'badge badge-twitch';
+    } 
+    else {
       badgeText = '';
       badgeClass = '';
     }
@@ -61,6 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     logOutput.appendChild(logEntry);
     logOutput.scrollTop = logOutput.scrollHeight;
+
+    entryCountSpan.textContent = `${logOutput.childElementCount} Entities`;
   }
 
   // Recibimos mensajes desde el main
@@ -89,8 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (tiktokConnection == false) {
       const result = await window.electronAPI.startTiktokConnection();
 
-      appendLog(result.message);
-
       if (result.success) {
         statusDot.classList.remove('disconnected');
         statusDot.classList.add('connected');
@@ -111,8 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
       tiktokText.textContent = 'Disconnected';
 
       tiktokConnection = false;
-
-      appendLog(result.message);
     }
   });
 
@@ -139,8 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
           twitchConnection = false;
         }, 2000);
       }
-
-      appendLog(result.message);
     } else {
       const result = await window.electronAPI.disconnectTwitch();
 
@@ -149,8 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
       twitchText.textContent = 'Disconnected';
 
       twitchConnection = false;
-
-      appendLog(result.message);
     }
   });
 

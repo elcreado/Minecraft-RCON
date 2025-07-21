@@ -48,7 +48,7 @@ async function twitchConnection() {
         // Cada vez que se refresquen tokens, los guardamos
         onRefresh: async (userId, newTokenData) => {
             await fs.writeFile(`./data/tokens/tokens.${userId}.json`, JSON.stringify(newTokenData, null, 4), 'utf-8');
-            log(`🔄 Tokens actualizados para ${userId}`);
+            log(`🔄 Tokens actualizados para ${userId}`, 'var(--info-color)');
         }
     });
 
@@ -63,33 +63,29 @@ async function twitchConnection() {
     if (!user) {
         throw new Error(`Usuario de Twitch "${TWITCH_BROADCASTER_LOGIN}" no encontrado`);
     }
-    log(`▶️ Twitch conectado como: ${user.displayName}`);
+    log(`▶️ Twitch conectado como: ${user.displayName}`, 'var(--success-color)');
 
 
     // Inicia el listener de EventSub por WebSockets
     twitchListener = new EventSubWsListener({ authProvider, apiClient: api });
     await twitchListener.start();
-    log('✅ Twitch EventSub WS iniciado');
+    log('✅ Twitch EventSub WS iniciado', 'var(--success-color)');
 
     twitchListener.onChannelRedemptionAdd(user.id, event => {
-        console.log('Listener activado para recompensas de canal');
         (async () => {
             try {
                 const username = event.userDisplayName;
                 const title = event.rewardTitle;
 
-                log(`🔔 Recompensa redimida por ${username}: ${title}`);
-                console.log(`🔔 Recompensa redimida por ${username}: ${title}`);
-                // 3) Ejecuta la recompensa (spawn, teleport, etc)
-
+                log(`🔔 Recompensa redimida por ${username}: ${title}`, 'var(--twitch-color)');
                 try {
                     await handleReward(title);
                 } catch (err) {
-                    log(`⚠️ Has been an error while handling the reward: ${err.message}`);
+                    log(`⚠️ Has been an error while handling the reward: ${err.message}`, 'var(--error-color)');
                 }
 
             } catch (err) {
-                log(`⚠️ Has been an error while processing the redemption: ${err.message}`);
+                log(`⚠️ Has been an error while processing the redemption: ${err.message}`, 'var(--error-color)');
             }
         })();
     });
@@ -101,9 +97,9 @@ export async function disconnectTwitch()  {
         await twitchListener.removeListener();
         await twitchListener.stop();
         twitchListener = null;
-        log('✅ Twitch EventSub WS detenido');
+        log('✅ Twitch EventSub WS detenido', 'var(--info-color)');
     } else {
-        log('⚠️ No hay un listener de Twitch activo para detener');
+        log('⚠️ No hay un listener de Twitch activo para detener', 'var(--error-color)');
     }
 }
 
@@ -112,7 +108,7 @@ export async function twitchMain() {
         await twitchConnection();
         return { success: true, message: 'Twitch connection started' };
     } catch (error) {
-        log(`⚠️| Error al conectar con Twitch: ${error.message}`);
+        log(`⚠️| Error al conectar con Twitch: ${error.message}`, 'var(--error-color)');
         return { success: false, message: error.message };
     }
 }

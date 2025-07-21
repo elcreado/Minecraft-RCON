@@ -42,7 +42,7 @@ async function TiktokGiftRewards(giftId) {
     const reward = tiktokRewards.gifts[key];
     if (!reward) return console.warn(`No hay recompensas para el ID ${key}`);
 
-    log("El regalo recibido es = ", key);
+    log(`El regalo recibido es ${key}`, 'var(--tiktok-color)');
 
     await handleReward(reward.action);
 };
@@ -68,10 +68,10 @@ let connected = false;
 export async function tiktokConnection(username) {
     if (connected == true) {
         try {
-            log('⚠️| Tiktok connection already exists. Disconnecting first...');
+            log('Tiktok connection already exists. Disconnecting first...', 'var(--info-color)');
             await disconnectTiktok();
         } catch (error) {
-            log(`⚠️| Error disconnecting TikTok: ${error.message}`);
+            log(`Error disconnecting TikTok: ${error.message}`, 'var(--error-color)');
             return;
         }
     }
@@ -108,16 +108,16 @@ export async function tiktokConnection(username) {
     });
 
     connection.on(WebcastEvent.CHAT, data => {
-        log(`${data.user.uniqueId} writes: ${data.comment}`, 'var(--tiktok-chat-color)');
+        log(`${data.user.uniqueId} writes: ${data.comment}`, 'var(--tiktok-color)');
     });
 
     connection.on(WebcastEvent.GIFT, async data => {
-        log(`${data.user.uniqueId} sends ${data.giftId}`, 'var(--tiktok-chat-color)');
+        log(`${data.user.uniqueId} sends ${data.giftId}`, 'var(--tiktok-color)');
 
         try {
             await TiktokGiftRewards(data.giftId);
         } catch (error) {
-            log(`⚠️| Error to process TikTok gift: ${error.message}`);
+            log(`Error to process TikTok gift: ${error.message}`, 'var(--error-color)');
         }
     });
 
@@ -128,9 +128,6 @@ export async function tiktokConnection(username) {
             await handleReward(actions.spawnZombie);
             likeCounts = 0;
         };
-
-        console.log(`Se ah dado like`);
-        console.log(likeCounts);
     });
 
 
@@ -142,9 +139,9 @@ export async function disconnectTiktok() {
         try {
             await connection.disconnect();
             connected = null;
-            log('✅| Tiktok connection closed successfully.');
+            log('Tiktok connection closed successfully.', 'var(--success-color)');
         } catch (error) {
-            log(`⚠️| Error disconnecting TikTok: ${error.message}`);
+            log(`⚠️| Error disconnecting TikTok: ${error.message}`, 'var(--error-color)');
         }
     }
 }

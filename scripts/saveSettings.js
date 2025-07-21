@@ -11,10 +11,10 @@ async function loadSettings() {
     try {
         const settingsPath = path.join(__dirname, '../data/settings.json');
         const raw = await fs.readFile(settingsPath, 'utf-8');
-        log('✅| [saveSettings.js] Settings loaded successfully');
+        log('Settings loaded successfully', 'var(--success-color)');
         return JSON.parse(raw);
     } catch (error) {
-        log('⚠️| [saveSettings.js] Failed to load settings.json', error);
+        log(error, 'var(--error-color)');
         return {};
     }
 }
@@ -23,9 +23,9 @@ async function saveSettings(settings) {
     try {
         const settingsPath = path.join(__dirname, '../data/settings.json');
         await fs.writeFile(settingsPath, JSON.stringify(settings, null, 4));
-        log('✅| [saveSettings.js] Settings saved successfully');
+        log('Settings saved successfully', 'var(--success-color)');
     } catch (error) {
-        log('⚠️| [saveSettings.js] Failed to save settings.json', error);
+        log(error, 'var(--error-color)');
     }
 }
 
