@@ -48,27 +48,7 @@
           <span class="entry-count">4 entradas</span>
         </div>
         <div id="log-output">
-          <!-- Ejemplo de entradas -->
-          <div class="log-entry">
-            <span class="timestamp">19:09:58</span>
-            <span class="badge badge-success">SUCCESS</span>
-            <span class="message">Application successfully loaded!</span>
-          </div>
-          <div class="log-entry">
-            <span class="timestamp">19:09:58</span>
-            <span class="badge badge-success">SUCCESS</span>
-            <span class="message">TikTok rewards loaded successfully.</span>
-          </div>
-          <div class="log-entry">
-            <span class="timestamp">19:09:58</span>
-            <span class="badge badge-info">INFO</span>
-            <span class="message">Application started.</span>
-          </div>
-          <div class="log-entry">
-            <span class="timestamp">19:09:58</span>
-            <span class="badge badge-success">SUCCESS</span>
-            <span class="message">Application started successfully.</span>
-          </div>
+         
         </div>
       </section>
 
@@ -86,11 +66,11 @@
                 <span>TikTok</span>
               </div>
               <div class="service-card-body">
-                <span class="status-dot connected"></span>
-                <span>Conectado</span>
+                <span class="status-dot disconnected"></span>
+                <span id="tiktok-status">Disconnected</span>
               </div>
               <div class="service-card-footer">
-                <small>Última actualización: Hace 2 minutos</small>
+                <small style="display: none;">Without connection</small>
               </div>
             </div>
             <div class="service-card">
@@ -99,11 +79,11 @@
                 <span>Twitch</span>
               </div>
               <div class="service-card-body">
-                <span class="status-dot connected"></span>
-                <span>Conectado</span>
+                <span class="status-dot disconnected"></span>
+                <span id="twitch-status">Disconnected</span>
               </div>
               <div class="service-card-footer">
-                <small>Última actualización: Hace 1 minuto</small>
+                <small style="display: none;">Without connection</small>
               </div>
             </div>
             <div class="service-card">
@@ -112,11 +92,11 @@
                 <span>Minecraft RCON</span>
               </div>
               <div class="service-card-body">
-                <span class="status-dot connected"></span>
-                <span>Conectado</span>
+                <span class="status-dot disconnected"></span>
+                <span>Disconnected</span>
               </div>
               <div class="service-card-footer">
-                <small>Última actualización: Hace 30 segundos</small>
+                <small style="display: none;">Without connection</small>
               </div>
             </div>
           </div>

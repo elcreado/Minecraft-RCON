@@ -6,6 +6,7 @@
   --twitch-color:     #9146FF;
   --tiktok-color:     #EE1D52;
   --success-color:    #4CAF50;
+  --error-color:     #F44336;
   --info-color:       #2196F3;
   --font-family:      'Arial', sans-serif;
   --font-size:        16px;
@@ -246,6 +247,10 @@ body {
 
 .connected {
   background: var(--success-color);
+}
+
+.disconnected {
+  background: var(--error-color);
 }
 
 /* Configuración */

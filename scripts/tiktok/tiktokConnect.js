@@ -29,9 +29,9 @@ async function loadTiktokRewards() {
 
         const raw = await fs.readFile(rewardsPath, 'utf-8');
         tiktokRewards = JSON.parse(raw);
-        log('✅| [tiktokConnect.js] Tiktok rewards loaded successfully.');
+        log('Tiktok rewards loaded successfully.', 'var(--success-color)');
     } catch {
-        log('⚠️| [tiktokConnect.js] Failed to load tiktok-rewards.json');
+        log('Failed to load tiktok-rewards.json', 'var(--error-color)');
     }
 };
 

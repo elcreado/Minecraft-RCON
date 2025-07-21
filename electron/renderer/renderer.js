@@ -5,27 +5,61 @@ let twitchConnection = false;
 
 document.addEventListener('DOMContentLoaded', () => {
   // Elementos del DOM
-  const logSection     = document.querySelector('.log-section');
-  const logOutput      = document.getElementById('log-output');
-  const toggleLogBtn   = document.getElementById('btn-toggle-log');
+  const logSection = document.querySelector('.log-section');
+  const logOutput = document.getElementById('log-output');
+  const toggleLogBtn = document.getElementById('btn-toggle-log');
 
-  const tiktokBtn      = document.getElementById('btn-tiktok');
-  const twitchBtn      = document.getElementById('btn-twitch');
-  const saveSettingsBtn= document.getElementById('save-settings');
+  const tiktokBtn = document.getElementById('btn-tiktok');
+  const twitchBtn = document.getElementById('btn-twitch');
+  const saveSettingsBtn = document.getElementById('save-settings');
 
   // Función para añadir líneas al log
   function appendLog(message, color) {
     const MAX_LOG_LINES = 50;
     const time = new Date().toLocaleTimeString();
-    const line = document.createElement('div');
 
-    line.textContent = `[${time}] ${message}`;
-    line.style.color   = color || 'var(--text-color)';
+    let badgeText = '';
+    let badgeClass = '';
+
+    if (color === 'var(--success-color)') {
+      badgeText = 'SUCCESS';
+      badgeClass = 'badge badge-success';
+    } else if (color === 'var(--error-color)') {
+      badgeText = 'ERROR';
+      badgeClass = 'badge badge-error';
+    } else if (color === 'var(--info-color)') {
+      badgeText = 'INFO';
+      badgeClass = 'badge badge-info';
+    } else {
+      badgeText = '';
+      badgeClass = '';
+    }
+
+    const logEntry = document.createElement('div');
+    logEntry.classList.add('log-entry');
+
+    const timeStampSpan = document.createElement('span');
+    timeStampSpan.classList.add('timestamp');
+    timeStampSpan.textContent = `[${time}] `;
+    logEntry.appendChild(timeStampSpan);
+
+    if (badgeText) {
+      const badgeSpan = document.createElement('span');
+      badgeSpan.className = badgeClass;
+      badgeSpan.textContent = badgeText;
+      logEntry.appendChild(badgeSpan);
+    }
+
+    const messageSpan = document.createElement('span');
+    messageSpan.classList.add('message');
+    messageSpan.textContent = ` ${message}`;
+    logEntry.appendChild(messageSpan);
 
     if (logOutput.childElementCount >= MAX_LOG_LINES) {
       logOutput.removeChild(logOutput.firstChild);
     }
-    logOutput.appendChild(line);
+
+    logOutput.appendChild(logEntry);
     logOutput.scrollTop = logOutput.scrollHeight;
   }
 
@@ -45,54 +79,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Conectar / desconectar TikTok
   tiktokBtn.addEventListener('click', async () => {
-    if (!tiktokConnection) {
+    const tiktokCard = Array.from(document.querySelectorAll('.service-card')).find(card =>
+      card.querySelector('.service-card-header span').textContent.includes('TikTok')
+    );
+
+    const statusDot = tiktokCard.querySelector('.status-dot');
+    const tiktokText = tiktokCard.querySelector('#tiktok-status');
+
+    if (tiktokConnection == false) {
       const result = await window.electronAPI.startTiktokConnection();
+
       appendLog(result.message);
 
       if (result.success) {
-        tiktokBtn.innerHTML = `<i class="fab fa-tiktok"></i> TikTok Connected`;
-        tiktokBtn.style.backgroundColor = 'var(--success-color)';
+        statusDot.classList.remove('disconnected');
+        statusDot.classList.add('connected');
+        tiktokText.textContent = 'Connected';
+
         tiktokConnection = true;
       } else {
-        tiktokBtn.textContent = 'TikTok Connection Failed';
-        tiktokBtn.style.backgroundColor = 'var(--error-color)';
         setTimeout(() => {
-          tiktokBtn.innerHTML = `<i class="fab fa-tiktok"></i> TikTok Connect`;
-          tiktokBtn.style.backgroundColor = 'var(--tiktok-color)';
+          tiktokConnection = false;
         }, 2000);
       }
+
     } else {
       const result = await window.electronAPI.disconnectTiktok();
-      tiktokBtn.innerHTML = `<i class="fab fa-tiktok"></i> TikTok Connect`;
-      tiktokBtn.style.backgroundColor = 'var(--tiktok-color)';
+
+      statusDot.classList.remove('connected');
+      statusDot.classList.add('disconnected');
+      tiktokText.textContent = 'Disconnected';
+
       tiktokConnection = false;
+
       appendLog(result.message);
     }
   });
 
   // Conectar / desconectar Twitch
   twitchBtn.addEventListener('click', async () => {
-    if (!twitchConnection) {
+    const twitchCard = Array.from(document.querySelectorAll('.service-card')).find(card =>
+      card.querySelector('.service-card-header span').textContent.includes('Twitch')
+    );
+
+    const statusDot = twitchCard.querySelector('.status-dot');
+    const twitchText = twitchCard.querySelector('#twitch-status');
+
+    if (twitchConnection == false) {
       const result = await window.electronAPI.startTwitchConnection();
-      appendLog(result.message);
 
       if (result.success) {
-        twitchBtn.innerHTML = `<i class="fab fa-twitch"></i> Twitch Connected`;
-        twitchBtn.style.backgroundColor = 'var(--success-color)';
+        statusDot.classList.remove('disconnected');
+        statusDot.classList.add('connected');
+        twitchText.textContent = 'Connected';
+
         twitchConnection = true;
       } else {
-        twitchBtn.textContent = 'Twitch Connection Failed';
-        twitchBtn.style.backgroundColor = 'var(--error-color)';
         setTimeout(() => {
-          twitchBtn.innerHTML = `<i class="fab fa-twitch"></i> Twitch Connect`;
-          twitchBtn.style.backgroundColor = 'var(--twitch-color)';
+          twitchConnection = false;
         }, 2000);
       }
+
+      appendLog(result.message);
     } else {
       const result = await window.electronAPI.disconnectTwitch();
-      twitchBtn.innerHTML = `<i class="fab fa-twitch"></i> Twitch Connect`;
-      twitchBtn.style.backgroundColor = 'var(--twitch-color)';
+
+      statusDot.classList.remove('connected');
+      statusDot.classList.add('disconnected'); 
+      twitchText.textContent = 'Disconnected';
+
       twitchConnection = false;
+
       appendLog(result.message);
     }
   });
@@ -112,9 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
     twitchConnection = false;
 
     const result = await window.electronAPI.saveSettings({ tiktokUsername, twitchUsername });
-    appendLog(result.message);
+
+    appendLog(result.message, 'var(--success-color)');
   });
 
   // Mensaje inicial
-  appendLog('✅ Application successfully loaded!', 'var(--success-color)');
+  appendLog('Application successfully loaded!', 'var(--success-color)');
 });
