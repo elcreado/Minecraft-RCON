@@ -13,6 +13,10 @@ data/tokens
 .env
 config.env
 
+# Server
+
+server/minecraft
+
 # Logs
 npm-debug.log*
 yarn-debug.log*

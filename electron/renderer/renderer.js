@@ -2,6 +2,7 @@
 
 let tiktokConnection = false;
 let twitchConnection = false;
+let serverStarted = false;
 
 document.addEventListener('DOMContentLoaded', () => {
   // Elementos del DOM
@@ -12,11 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const tiktokBtn = document.getElementById('btn-tiktok');
   const twitchBtn = document.getElementById('btn-twitch');
+  const serverBtn = document.getElementById('btn-server');
+  const serverStartBtn = document.getElementById('btn-start');
   const saveSettingsBtn = document.getElementById('save-settings');
 
   // Función para añadir líneas al log
   function appendLog(message, color) {
-    const MAX_LOG_LINES = 25;
+    const MAX_LOG_LINES = 9;
     const time = new Date().toLocaleTimeString();
 
     let badgeText = '';
@@ -162,6 +165,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
       twitchConnection = false;
     }
+  });
+
+  serverBtn.addEventListener('click', async () => {
+    const result = await window.electronAPI.createMinecraftSv();
+
+    log(result, 'var(--info-color)');
+  });
+
+  serverStartBtn.addEventListener('click', async () => {
+
+    if (serverStarted == false) {
+      const result = await window.electronAPI.startServer();
+      serverStarted = true;
+      log(result, 'var(--info-color)');
+    } else {
+      const result = await window.electronAPI.stopServer();
+      serverStarted = false;
+      log(result, 'var(--info-color)');
+    }
+
+
   });
 
   // Guardar usuarios de TikTok / Twitch

@@ -5,6 +5,8 @@ import { Rcon } from 'rcon-client';
 import { loadSettings } from '../saveSettings.js';
 import { log } from '../logger.js';
 
+dotenv.config({ path: './config.env' });
+
 export async function handleReward(title) {
     const t = title.toLowerCase();
     const settings = await loadSettings();

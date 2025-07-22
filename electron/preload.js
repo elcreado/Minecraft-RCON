@@ -6,6 +6,9 @@ contextBridge.exposeInMainWorld("electronAPI", {
     startTwitchConnection: () => ipcRenderer.invoke("start-twitch-connection"),
     disconnectTiktok: () => ipcRenderer.invoke("disconnect-tiktok"),
     disconnectTwitch: () => ipcRenderer.invoke("disconnect-twitch"),
-    saveSettings: (settings) => ipcRenderer.invoke("save-settings", settings)
+    saveSettings: (settings) => ipcRenderer.invoke("save-settings", settings),
+    createMinecraftSv: () => ipcRenderer.invoke("create-server"),
+    startServer: () => ipcRenderer.invoke("start-server"),
+    stopServer: () => ipcRenderer.invoke("stop-server")
 });
     

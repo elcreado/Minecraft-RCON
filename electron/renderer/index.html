@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rewards Application</title>
   <!-- Font Awesome para íconos -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="styles/index.css">
 </head>
+
 <body>
   <div class="container">
     <!-- Top Bar -->
@@ -48,7 +46,7 @@
           <span class="entry-count" id="entry-count-span">0 Entities</span>
         </div>
         <div id="log-output">
-         
+          <!-- Aquí las .log-entry -->
         </div>
       </section>
 
@@ -106,26 +104,25 @@
         <div class="config-section">
           <h2>Settings</h2>
           <label for="tiktok-username">Tiktok user</label>
-          <input
-            type="text"
-            id="tiktok-username"
-            placeholder="Write your tiktok user"
-          >
+          <input type="text" id="tiktok-username" placeholder="Write your tiktok user">
           <label for="twitch-username">Twitch user</label>
-          <input
-            type="text"
-            id="twitch-username"
-            placeholder="Write your twitch user"
-          >
-          <label for="server-ip">Minecraft server IP</label>
-          <input
-            type="text"
-            id="server-ip"
-            placeholder="Write your server IP"
-          >
+          <input type="text" id="twitch-username" placeholder="Write your twitch user">
           <button id="save-settings" class="btn btn-save">
             <i class="fas fa-save"></i>
             Save Settings
+          </button>
+        </div>
+
+        <!-- Panel dedicado al Servidor -->
+        <div class="server-section">
+          <h2>Server</h2>
+          <button id="btn-server" class="btn btn-server">
+            <i class="fab fa-minecraft"></i>
+            Create Server
+          </button>
+          <button id="btn-start" class="btn btn-start">
+            <i class="fab fa-minecraft"></i>
+            Start Server
           </button>
         </div>
       </section>
@@ -134,4 +131,5 @@
 
   <script src="renderer.js" type="module"></script>
 </body>
+
 </html>
