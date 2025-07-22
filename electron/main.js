@@ -10,6 +10,7 @@ import { log, onLog } from '../scripts/logger.js';
 
 import { tiktokMain, disconnectTiktok } from '../scripts/tiktok/tiktokConnect.js';
 import { twitchMain, disconnectTwitch } from '../scripts/Twitch/twitchConnect.js';
+import { stopServer } from '../scripts/Minecraft/serverManager.js';
 
 import { loadSettings, saveSettings } from '../scripts/saveSettings.js';
 
@@ -76,7 +77,8 @@ ipcMain.handle('start-server', async (event) => {
         jar,
         'nogui'
     ], {
-        cwd: mcServerDir
+        cwd: mcServerDir,
+        stdio: ['pipe', 'pipe', 'pipe']
     });
 
     const propertiesFile = path.join(mcServerDir, 'server.properties');
@@ -98,16 +100,13 @@ ipcMain.handle('start-server', async (event) => {
         log(data.toString(), 'var(--info-color)');
     });
 
-    return { sucess: true };
+    return { success: true, message: 'Rcon server STARTED SUCCESFULY!' };
 });
 
 ipcMain.handle('stop-server', async (event) => {
-    if (!serverProcess) return { ok: false, error: 'No está corriendo' };
-
-    serverProcess.stdin.write('stop\n');
-
+    const stopped = await stopServer(serverProcess);
     serverProcess = null;
-    return { ok: true };
+    return { success: true, message: stopped};
 });
 
 ipcMain.handle('start-tiktok-connection', async () => {
@@ -176,6 +175,18 @@ ipcMain.handle('disconnect-twitch', async () => {
 
     return { success: true, message: 'Twitch connection disconnected' };
 });
+
+app.on('before-quit', async (e) => {
+    e.preventDefault();
+
+    try {
+        await stopServer(serverProcess);
+    } catch (err) {
+        console.error('Error closing the resources: ', err);
+    }
+
+    app.exit(0);
+})
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {

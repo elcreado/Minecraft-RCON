@@ -103,8 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await window.electronAPI.startTiktokConnection();
 
       if (result.success) {
-        tiktokBtn.innerHTML = `<i class="fab fa-tiktok"></i> TikTok Connected`;
-        tiktokBtn.style.backgroundColor = 'var(--tiktok-color)';
+        tiktokBtn.innerHTML = `<i class="fab fa-tiktok"></i> Disconnect Tiktok`;
+        tiktokBtn.style.backgroundColor = 'var(--success-color)';
         tiktokConnection = false;
 
         statusDot.classList.remove('disconnected');
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       await window.electronAPI.disconnectTiktok();
 
-      tiktokBtn.innerHTML = `<i class="fab fa-tiktok"></i> TikTok Connect`;
+      tiktokBtn.innerHTML = `<i class="fab fa-tiktok"></i> Connect Tiktok`;
       tiktokBtn.style.backgroundColor = 'var(--tiktok-color)';
       tiktokConnection = false;
 
@@ -146,6 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await window.electronAPI.startTwitchConnection();
 
       if (result.success) {
+        twitchBtn.innerHTML = `<i class="fab fa-twitch"></i> Disconnect Twitch`;
+        twitchBtn.style.backgroundColor = 'var(--success-color)';
+
         statusDot.classList.remove('disconnected');
         statusDot.classList.add('connected');
         twitchText.textContent = 'Connected';
@@ -158,6 +161,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } else {
       const result = await window.electronAPI.disconnectTwitch();
+      twitchBtn.innerHTML = `<i class="fab fa-twitch"></i> Connect Twitch`;
+      twitchBtn.style.backgroundColor = 'var(--twitch-color)';
 
       statusDot.classList.remove('connected');
       statusDot.classList.add('disconnected');
@@ -170,19 +175,35 @@ document.addEventListener('DOMContentLoaded', () => {
   serverBtn.addEventListener('click', async () => {
     const result = await window.electronAPI.createMinecraftSv();
 
-    log(result, 'var(--info-color)');
+    appendLog(result, 'var(--success-color)');
   });
 
   serverStartBtn.addEventListener('click', async () => {
+    const serverText = document.getElementById('server-text');
+    const serverStatus = document.getElementById('server-status');
 
     if (serverStarted == false) {
       const result = await window.electronAPI.startServer();
       serverStarted = true;
-      log(result, 'var(--info-color)');
+
+      serverStatus.classList.remove('disconnected');
+      serverStatus.classList.add('connected');
+      serverText.textContent = "Connected";
+
+      serverStartBtn.textContent = "Stop Server";
+      serverStartBtn.style.backgroundColor = 'var(--error-color)';
+      appendLog(result.message, 'var(--info-color)');
     } else {
       const result = await window.electronAPI.stopServer();
       serverStarted = false;
-      log(result, 'var(--info-color)');
+
+      serverStatus.classList.remove('connected');
+      serverStatus.classList.add('disconnected');
+      serverText.textContent = "Disconnected";
+
+      serverStartBtn.textContent = "Start Server";
+      serverStartBtn.style.backgroundColor = 'var(--minecraft-color)';
+      appendLog(result.message, 'var(--info-color)');
     }
 
 
