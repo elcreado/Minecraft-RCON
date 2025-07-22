@@ -1,14 +1,14 @@
-import { spawn } from 'child_process';
-import dotenv from 'dotenv';
+// import { spawn } from 'child_process';
+// import dotenv from 'dotenv';
 
-import { log, onLog } from './scripts/logger.js';
+// import { log, onLog } from './scripts/logger.js';
 
-//Configuracion
+// //Configuracion
 
-dotenv.config({ path: './config.env' });
+// dotenv.config({ path: './config.env' });
 
 
-export async function __init() {
-    log('🔰| Application started.');
-}
+// export async function __init() {
+//     log('Application started.', 'var(--success-color)');
+// }
 

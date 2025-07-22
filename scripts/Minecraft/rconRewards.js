@@ -2,11 +2,19 @@ import dotenv from 'dotenv';
 
 import { Rcon } from 'rcon-client';
 
-export async function handleReward(title) {
-    console.log(`Iniciando `);
+import { loadSettings } from '../saveSettings.js';
+import { log } from '../logger.js';
 
+dotenv.config({ path: './config.env' });
+
+export async function handleReward(title) {
     const t = title.toLowerCase();
-    const args = [process.env.RCON_HOST, process.env.RCON_PORT, process.env.RCON_PASSWORD];
+    const settings = await loadSettings();
+    const serverIp = settings.rconIp;
+
+    log(`Server responding in ${serverIp}`, 'var(--info-color)');
+
+    const args = [serverIp, process.env.RCON_PORT, process.env.RCON_PASSWORD];
     if (t.includes('creeper')) await spawnCreeper(...args);
     if (t.includes('zombie')) await spawnZombie(...args);
     if (t.includes('teleport')) await teleportRandomNearby(...args);

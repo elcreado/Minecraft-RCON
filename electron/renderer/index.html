@@ -1,36 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rewards Aplication</title>
-    <link rel="stylesheet" href="styles/index.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rewards Application</title>
+  <!-- Font Awesome para íconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="styles/index.css">
 </head>
 
 <body>
-    <div class="header">
-        <h1>Rewards Application</h1>
+  <div class="container">
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <div class="logo">
+        <i class="fas fa-bolt"></i>
+        <span>Rewards Application</span>
+      </div>
+      <div class="connect-buttons">
+        <button id="btn-twitch" class="btn btn-twitch">
+          <i class="fab fa-twitch"></i>
+          Twitch Connect
+        </button>
+        <button id="btn-tiktok" class="btn btn-tiktok">
+          <i class="fab fa-tiktok"></i>
+          TikTok Connect
+        </button>
+        <button id="btn-toggle-log" class="btn btn-toggle">
+          <i class="fas fa-eye-slash"></i>
+          Ocultar Log
+        </button>
+      </div>
+    </header>
 
-    </div>
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Log de Actividad -->
+      <section class="log-section" style="display:block;">
+        <div class="log-header">
+          <h2><i class="fas fa-terminal"></i> Activity Log </h2>
+          <span class="entry-count" id="entry-count-span">0 Entities</span>
+        </div>
+        <div id="log-output">
+          <!-- Aquí las .log-entry -->
+        </div>
+      </section>
 
-    <div class="control-section">
-        <button id="start-twitch">Twitch Connect</button>
-        <button id="start-tiktok">TikTok Connect</button>
-        <button id="show-console">Show Log</button>
-        <button id="settings">Settings</button>
-    </div>
+      <!-- Estado de Servicios y Configuración -->
+      <section class="status-settings">
+        <!-- Servicios -->
+        <div class="status-section">
+          <div class="section-header">
+            <h2>Services Status <span>Real Time</span></h2>
+          </div>
+          <div class="service-cards">
+            <div class="service-card">
+              <div class="service-card-header">
+                <i class="fab fa-tiktok"></i>
+                <span>TikTok</span>
+              </div>
+              <div class="service-card-body">
+                <span class="status-dot disconnected"></span>
+                <span id="tiktok-status">Disconnected</span>
+              </div>
+              <div class="service-card-footer">
+                <small style="display: none;">Without connection</small>
+              </div>
+            </div>
+            <div class="service-card">
+              <div class="service-card-header">
+                <i class="fab fa-twitch"></i>
+                <span>Twitch</span>
+              </div>
+              <div class="service-card-body">
+                <span class="status-dot disconnected"></span>
+                <span id="twitch-status">Disconnected</span>
+              </div>
+              <div class="service-card-footer">
+                <small style="display: none;">Without connection</small>
+              </div>
+            </div>
+            <div class="service-card">
+              <div class="service-card-header">
+                <i class="fas fa-gamepad"></i>
+                <span>Minecraft RCON</span>
+              </div>
+              <div class="service-card-body">
+                <span class="status-dot disconnected"></span>
+                <span>Disconnected</span>
+              </div>
+              <div class="service-card-footer">
+                <small style="display: none;">Without connection</small>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <div id="settings-section" style="display: none;">
-        <h2>Settings</h2>
-        <label for="tiktok-username">TikTok Username:</label>
-        <input type="text" id="tiktok-username" placeholder="Enter TikTok Username">
-        <label for="twitch-username">Twitch Username:</label>
-        <input type="text" id="twitch-username" placeholder="Enter Twitch Username">
-        <button id="save-settings">Save Settings</button>
-    </div>
+        <!-- Configuración -->
+        <div class="config-section">
+          <h2>Settings</h2>
+          <label for="tiktok-username">Tiktok user</label>
+          <input type="text" id="tiktok-username" placeholder="Write your tiktok user">
+          <label for="twitch-username">Twitch user</label>
+          <input type="text" id="twitch-username" placeholder="Write your twitch user">
+          <button id="save-settings" class="btn btn-save">
+            <i class="fas fa-save"></i>
+            Save Settings
+          </button>
+        </div>
 
-    <div id="log-output" style="display: none;"></div>
+        <!-- Panel dedicado al Servidor -->
+        <div class="server-section">
+          <h2>Server</h2>
+          <button id="btn-server" class="btn btn-server">
+            <i class="fab fa-minecraft"></i>
+            Create Server
+          </button>
+          <button id="btn-start" class="btn btn-start">
+            <i class="fab fa-minecraft"></i>
+            Start Server
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
 
-    <script src="renderer.js" type="module"></script>
+  <script src="renderer.js" type="module"></script>
 </body>
+
 </html>
