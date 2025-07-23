@@ -1,0 +1,81 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Top Bar */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--secondary-color);
+  padding: 16px 32px;
+  margin: 16px;
+  border-radius: 8px;
+}
+
+.top-bar .logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.top-bar .logo i {
+  color: var(--accent-color);
+  font-size: 1.5rem;
+}
+
+.top-bar .logo span {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* Botones */
+.connect-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn i {
+  font-size: 1rem;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  opacity: 0.8;
+}
+
+.btn-twitch {
+  background: var(--twitch-color);
+  color: #fff;
+}
+
+.btn-tiktok {
+  background: var(--tiktok-color);
+  color: #fff;
+}
+
+.btn-toggle {
+  background: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.btn-save {
+  background: var(--accent-color);
+  color: #fff;
+  width: 100%;
+}

@@ -40,6 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (color === 'var(--twitch-color)') {
       badgeText = 'TWITCH';
       badgeClass = 'badge badge-twitch';
+    } else if (color === 'var(--minecraft-color)') {
+      badgeText = 'MINECRAFT';
+      badgeClass = 'badge badge-minecraft';
     }
     else {
       badgeText = '';
@@ -183,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const serverStatus = document.getElementById('server-status');
 
     if (serverStarted == false) {
-      const result = await window.electronAPI.startServer();
+      await window.electronAPI.startServer();
       serverStarted = true;
 
       serverStatus.classList.remove('disconnected');
@@ -192,9 +195,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       serverStartBtn.textContent = "Stop Server";
       serverStartBtn.style.backgroundColor = 'var(--error-color)';
-      appendLog(result.message, 'var(--info-color)');
     } else {
-      const result = await window.electronAPI.stopServer();
+      await window.electronAPI.stopServer();
       serverStarted = false;
 
       serverStatus.classList.remove('connected');
@@ -203,7 +205,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       serverStartBtn.textContent = "Start Server";
       serverStartBtn.style.backgroundColor = 'var(--minecraft-color)';
-      appendLog(result.message, 'var(--info-color)');
     }
 
 

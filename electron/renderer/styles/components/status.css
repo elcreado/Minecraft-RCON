@@ -1,0 +1,59 @@
+/* Estado de Servicios & Configuración */
+.status-settings {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.status-section,
+
+.section-header h2 {
+  font-size: 1.1rem;
+}
+
+.section-header h2 span {
+  font-size: 0.85rem;
+  color: #888;
+  margin-left: 8px;
+}
+
+/* Service Cards */
+.service-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.service-card {
+  background: var(--secondary-color);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.service-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+}
+
+.service-card-body {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.connected    { background: var(--success-color); }
+.disconnected { background: var(--error-color); }

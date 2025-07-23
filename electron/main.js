@@ -94,10 +94,10 @@ ipcMain.handle('start-server', async (event) => {
 
     // Escucha logs y mándalos al renderer
     serverProcess.stdout.on('data', data => {
-        log(data.toString(), 'var(--info-color)');
+        log(data.toString(), 'var(--minecraft-color)');
     });
     serverProcess.stderr.on('data', data => {
-        log(data.toString(), 'var(--info-color)');
+        log(data.toString(), 'var(--minecraft-color)');
     });
 
     return { success: true, message: 'Rcon server STARTED SUCCESFULY!' };
