@@ -1,0 +1,61 @@
+.log-section {
+  flex: 1;
+  background: var(--secondary-color);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #333;
+}
+
+.log-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+}
+
+#log-output {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Cada log-entry como tarjeta */
+.log-entry {
+  background: var(--primary-color);
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.timestamp {
+  color: #888;
+  font-size: 0.9rem;
+  margin-right: 12px;
+}
+
+.badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-right: 12px;
+  text-transform: uppercase;
+}
+
+.badge-success   { background: var(--success-color); }
+.badge-info      { background: var(--info-color); }
+.badge-error     { background: var(--error-color); }
+.badge-tiktok    { background: var(--tiktok-color); }
+.badge-twitch    { background: var(--twitch-color); }
+.badge-minecraft { background: var(--minecraft-color);}

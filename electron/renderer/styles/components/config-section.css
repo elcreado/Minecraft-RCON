@@ -1,0 +1,53 @@
+/* Settings section */
+
+.config-section h2 {
+  margin-bottom: 12px;
+}
+
+.config-section label {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.config-section {
+  background: var(--secondary-color);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.config-section input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 4px;
+  color: var(--text-color);
+}
+
+/* Server Buttons seccion */
+
+.server-section {
+  background: var(--secondary-color);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.server-section h2 {
+  margin-bottom: 12px;
+}
+
+.server-section .btn {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.btn-server,
+.btn-start {
+  background: var(--minecraft-color);
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 20px;
+}

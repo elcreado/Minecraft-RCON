@@ -11,6 +11,10 @@
     integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="styles/index.css">
+  <link rel="stylesheet" href="styles/components/config-section.css">
+  <link rel="stylesheet" href="styles/components/main-log.css">
+  <link rel="stylesheet" href="styles/components/status.css">
+  <link rel="stylesheet" href="styles/components/top-bar.css">
 </head>
 
 <body>
@@ -24,15 +28,15 @@
       <div class="connect-buttons">
         <button id="btn-twitch" class="btn btn-twitch">
           <i class="fab fa-twitch"></i>
-          Twitch Connect
+          Connect Twitch
         </button>
         <button id="btn-tiktok" class="btn btn-tiktok">
           <i class="fab fa-tiktok"></i>
-          TikTok Connect
+          Connect Tiktok
         </button>
         <button id="btn-toggle-log" class="btn btn-toggle">
           <i class="fas fa-eye-slash"></i>
-          Ocultar Log
+          Hide Log
         </button>
       </div>
     </header>
@@ -90,8 +94,8 @@
                 <span>Minecraft RCON</span>
               </div>
               <div class="service-card-body">
-                <span class="status-dot disconnected"></span>
-                <span>Disconnected</span>
+                <span class="status-dot disconnected" id="server-status"></span>
+                <span id="server-text">Disconnected</span>
               </div>
               <div class="service-card-footer">
                 <small style="display: none;">Without connection</small>

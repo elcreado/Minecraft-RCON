@@ -1,11 +1,14 @@
 # StreamCraft Rewards  
 
-## Table of Contents
+## Tabla de contenido
 
-- [About](#about)
+- [Acerca de](#about)
+- [Instalación](#instalacion)
 
-## About <a name = "about"></a>
+## Acerca de <a name = "about"></a>
 
-**StreamCraft Rewards** is an open-source tool designed to enhance live streaming experiences by enabling real-time interaction between streamers and their viewers. It integrates with Twitch channel points and TikTok donations to trigger in-game rewards in Minecraft, such as items, commands, or custom events.
+**StreamCraft Rewards** es una aplicación que hace los en vivo mucho mas interactivos, está integrado con Twitch y Tiktok para generar eventos dentro del juego "Minecraft" a cambio de ya sea Likes, comentarios, donaciones o recompensas de canal.
 
-This project is currently in **beta**, supporting TikTok donation presets. Future updates will expand functionality, improve user customization, and add support for additional platforms and reward types to deliver an even better streaming experience.
+## Instalación <a name = "instalacion"></a>
+
+Para usar **StreamCraft Rewards** simplemente clona este repositorio y ejecuta mediante consola **npm run dev**, esto abrirá la interfaz en electron con la cual puedes configurar toda la aplicación. Simplemente ingresa tu nombre de **Tiktok** (Tienes que estár en directo justo en el momento que conectas) y luego crearas el servidor de **Minecraft**, con todo esto ya tendriamos todo listo para usar. **AVISO IMPORTANTE** en está version (BETA) no está disponible la conexión con TWITCH, pronto llegará.
